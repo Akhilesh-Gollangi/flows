@@ -1,0 +1,34 @@
+id: sync-test
+namespace: wbr1
+description: Save and Execute the flow
+
+
+inputs:
+  - id: env
+    type: STRING
+    defaults: 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
+
+
+tasks:
+  - id: sync
+    type: io.kestra.plugin.git.SyncFlows
+    username: Akhilesh-Gollangi
+    password: "{{inputs.env}}"
+    url: https://github.com/Akhilesh-Gollangi/kestra_codes
+    branch: product
+    targetNamespace: wbr3
+    includeChildNamespaces: true
+    gitDirectory: code/codes
+    dryRun: false
+
+
+
+triggers:
+  - id: daily
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 9 * * *"
+    disabled: true 
+    
+  - id: webhook
+    type: io.kestra.plugin.core.trigger.Webhook
+    key: abcd
