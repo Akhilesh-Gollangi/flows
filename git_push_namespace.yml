@@ -1,0 +1,29 @@
+id: git_push_namespace
+namespace: wbr-automation
+description: Save and Execute the flow
+
+inputs:
+  - id: env
+    type: STRING
+    defaults: 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
+
+
+tasks:
+  - id: commit_and_push
+    type: io.kestra.plugin.git.PushFlows
+    username: Akhilesh-Gollangi
+    password: "{{inputs.env}}"
+    url: https://github.com/Akhilesh-Gollangi/kestra_codes
+    branch: develop
+    sourceNamespace: wbr2
+    targetNamespace: wbr-automation
+    gitDirectory: wbr2-folder
+    commitMessage: "changes to kestra flows"
+    dryRun: false
+
+
+triggers:
+  - id: daily
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 9 * * *"
+    disabled: true
